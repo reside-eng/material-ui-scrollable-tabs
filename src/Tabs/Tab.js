@@ -8,12 +8,24 @@ function getStyles(props, context) {
     isMultiLine,
     height,
     width,
+    selectedTextColor,
+    textColor,
+    style: {fontWeight, fontSize, boldFontWeight},
   } = props;
   const {tabs} = context.muiTheme;
+  const themeFontSize = (isMultiLine && !icon) ? '12px' : '14px';
+  const themeFontWeight = 300;
+  const themeBoldFontWeight = 500;
+
+  const propsOrThemeSelectedTextColor = selectedTextColor || tabs.selectedTextColor;
+  const propsOrThemeTextColor = textColor || tabs.textColor;
+  const propsOrThemeFontSize = fontSize || themeFontSize;
+  const propsOrThemeFontWeight = fontWeight || themeFontWeight;
+  const propsOrThemeBoldFontWeight = boldFontWeight || themeBoldFontWeight;
 
   return {
     root: {
-      color: props.selected ? tabs.selectedTextColor : tabs.textColor,
+      color: props.selected ? propsOrThemeSelectedTextColor : propsOrThemeTextColor,
       minWidth: isLargeView ? '160px' : '72px',
       maxWidth: '264px',
       width,
@@ -34,8 +46,8 @@ function getStyles(props, context) {
       textOverflow: 'ellipsis',
       textTransform: 'uppercase',
       whiteSpace: 'normal',
-      fontWeight: 500,
-      fontSize: (isMultiLine && !icon) ? '12px' : '14px',
+      fontWeight: props.selected ? propsOrThemeBoldFontWeight : propsOrThemeFontWeight,
+      fontSize: propsOrThemeFontSize,
       overflow: 'hidden',
       display: '-webkit-box',
       WebkitLineClamp: (isMultiLine && !icon) ? 2 : 1,

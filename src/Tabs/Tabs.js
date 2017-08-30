@@ -15,14 +15,14 @@ import InkBar from './InkBar';
 import ScrollButton from './ScrollButton';
 
 const getStyles = (props, context, state) => {
-  const {tabType} = props;
+  const {tabType, backgroundColor} = props;
   const {tabs} = context.muiTheme;
   const {offsetY} = state;
 
   return {
     root: {
       overflow: 'hidden',
-      backgroundColor: tabs.backgroundColor,
+      backgroundColor: backgroundColor || tabs.backgroundColor,
     },
     tabItemContainer: {
       flex: '1 1 auto',
@@ -296,6 +296,7 @@ class Tabs extends Component {
       tabTemplateStyle,
       tabType,
       width,
+      scrollIconColor,
       ...other
     } = this.props;
 
@@ -365,6 +366,7 @@ class Tabs extends Component {
           height={tabHeight}
           onTouchTap={this.handleLeftScrollTouchTap}
           visible={this.state.showLeftScroll}
+          scrollIconColor={scrollIconColor}
         />
       ) : null
     );
@@ -376,6 +378,7 @@ class Tabs extends Component {
           height={tabHeight}
           onTouchTap={this.handleRightScrollTouchTap}
           visible={this.state.showRightScroll}
+          scrollIconColor={scrollIconColor}
         />
       ) : null
     );

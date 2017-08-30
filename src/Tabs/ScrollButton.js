@@ -4,7 +4,7 @@ import KeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-lef
 import KeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
 
 const getStyles = (props, context) => {
-  const {height} = props;
+  const {height, scrollIconColor, scrollIconSize} = props;
   const {tabs} = context.muiTheme;
 
   return {
@@ -22,8 +22,8 @@ const getStyles = (props, context) => {
       height,
     },
     icon: {
-      color: tabs.selectedTextColor,
-      fontSize: 24,
+      color: scrollIconColor || tabs.selectedTextColor,
+      fontSize: scrollIconSize || 24,
     },
   };
 };
