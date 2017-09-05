@@ -51,10 +51,6 @@ class ScrollButton extends Component {
      */
     onTouchTap: PropTypes.func,
     /**
-     * Icon
-     * @type {[type]}
-     */
-    /**
      * Should the button be present or just consume space
      */
     visible: PropTypes.bool,
