@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react';
-import {get} from 'lodash';
 import EnhancedButton from 'material-ui/internal/EnhancedButton';
 import SadFace from 'material-ui/svg-icons/social/sentiment-very-dissatisfied';
 
@@ -84,6 +83,10 @@ class Tab extends Component {
      */
     iconPlaceholder: PropTypes.bool,
     /**
+     * Style object to apply to the icon element
+     */
+    iconStyle: PropTypes.object,
+    /**
      * @ignore
      */
     index: PropTypes.any,
@@ -99,6 +102,10 @@ class Tab extends Component {
      * Sets the text value of the tab item to the string specified.
      */
     label: PropTypes.node,
+    /**
+     * Style object for label
+     */
+    labelStyle: PropTypes.object,
     /**
      * Fired when the active tab changes by touch or tap.
      * Use this event to specify any functionality when an active tab changes.
@@ -118,9 +125,17 @@ class Tab extends Component {
      */
     selected: PropTypes.bool,
     /**
+     * Selected text color override
+     */
+    selectedTextColor: PropTypes.string,
+    /**
      * Override the inline-styles of the root element.
      */
     style: PropTypes.object,
+    /**
+     * Text color override
+     */
+    textColor: PropTypes.string,
     /**
      * @ignore
      * This property is overriden by the Tabs component.
@@ -172,6 +187,9 @@ class Tab extends Component {
       isLargeView, // eslint-disable-line no-unused-vars
       isMultiLine, // eslint-disable-line no-unused-vars
       style,
+      labelStyle, // eslint-disable-line no-unused-vars
+      textColor, // eslint-disable-line no-unused-vars
+      selectedTextColor, // eslint-disable-line no-unused-vars
       ...other
     } = this.props;
 
