@@ -1,27 +1,39 @@
 import React, {Component, PropTypes} from 'react';
 import EnhancedButton from 'material-ui/internal/EnhancedButton';
+import SadFace from 'material-ui/svg-icons/social/sentiment-very-dissatisfied';
+
 
 function getStyles(props, context) {
   const {
     icon,
+    iconPlaceholder,
     isLargeView,
     isMultiLine,
     height,
     width,
     selectedTextColor,
     textColor,
-    style: {fontWeight, fontSize, boldFontWeight},
+    labelStyle,
   } = props;
+
   const {tabs} = context.muiTheme;
-  const themeFontSize = (isMultiLine && !icon) ? '12px' : '14px';
-  const themeFontWeight = 300;
-  const themeBoldFontWeight = 500;
 
   const propsOrThemeSelectedTextColor = selectedTextColor || tabs.selectedTextColor;
   const propsOrThemeTextColor = textColor || tabs.textColor;
-  const propsOrThemeFontSize = fontSize || themeFontSize;
-  const propsOrThemeFontWeight = fontWeight || themeFontWeight;
-  const propsOrThemeBoldFontWeight = boldFontWeight || themeBoldFontWeight;
+
+  const themeLabelStyle = {
+    textOverflow: 'ellipsis',
+    textTransform: 'uppercase',
+    whiteSpace: 'normal',
+    fontWeight: props.selected ? 500 : 300,
+    fontSize: (isMultiLine && !icon) ? '12px' : '14px',
+    overflow: 'hidden',
+    display: '-webkit-box',
+    WebkitLineClamp: (isMultiLine && !icon && !iconPlaceholder) ? 2 : 1,
+    WebkitBoxOrient: 'vertical',
+  };
+
+  const label = Object.assign({}, themeLabelStyle, labelStyle)
 
   return {
     root: {
@@ -42,17 +54,7 @@ function getStyles(props, context) {
       paddingRight: isLargeView ? '24px' : '12px',
       height,
     },
-    label: {
-      textOverflow: 'ellipsis',
-      textTransform: 'uppercase',
-      whiteSpace: 'normal',
-      fontWeight: props.selected ? propsOrThemeBoldFontWeight : propsOrThemeFontWeight,
-      fontSize: propsOrThemeFontSize,
-      overflow: 'hidden',
-      display: '-webkit-box',
-      WebkitLineClamp: (isMultiLine && !icon) ? 2 : 1,
-      WebkitBoxOrient: 'vertical',
-    },
+    label,
   };
 }
 
@@ -76,6 +78,10 @@ class Tab extends Component {
      * Sets the icon of the tab, you can pass `FontIcon` or `SvgIcon` elements.
      */
     icon: PropTypes.node,
+    /**
+     * Adds an invisible icon for correct spacing
+     */
+    iconPlaceholder: PropTypes.bool,
     /**
      * @ignore
      */
@@ -154,6 +160,7 @@ class Tab extends Component {
   render() {
     const {
       icon,
+      iconPlaceholder,
       index, // eslint-disable-line no-unused-vars
       onActive, // eslint-disable-line no-unused-vars
       onTouchTap, // eslint-disable-line no-unused-vars
@@ -170,21 +177,27 @@ class Tab extends Component {
 
     const styles = getStyles(this.props, this.context);
 
+    const iconProps = {
+      style: {
+        fontSize: 24,
+        color: styles.root.color,
+        visibility: iconPlaceholder ? 'hidden' : null,
+        paddingBottom: label ? '4px' : '0px',
+        flexShrink: 0,
+      },
+    };
     let iconElement;
+
     if (icon && React.isValidElement(icon)) {
-      const iconProps = {
-        style: {
-          fontSize: 24,
-          color: styles.root.color,
-          paddingBottom: label ? '10px' : '0px',
-          flexShrink: 0,
-        },
-      };
       // If it's svg icon set color via props
       if (icon.type.muiName !== 'FontIcon') {
         iconProps.color = styles.root.color;
+        iconProps.height = '16px';
+        iconProps.width = '16px';
       }
       iconElement = React.cloneElement(icon, iconProps);
+    } else if (iconPlaceholder) {
+      iconElement = React.cloneElement(<SadFace />, iconProps);
     }
 
     const rippleOpacity = 0.3;

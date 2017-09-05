@@ -305,7 +305,7 @@ class Tabs extends Component {
     const tabContent = [];
     const fixedWidth = 100 / this.getTabCount();
 
-    const tabHeight = this.getTabs().some((tab) => (tab.props.label && tab.props.icon)) ? '72px' : '48px';
+    const tabHeight = this.getTabs().some((tab) => (tab.props.label && (tab.props.icon || tabs.props.iconPlaceholder))) ? '72px' : '48px';
 
     const tabs = this.getTabs().map((tab, index) => {
       warning(tab.type && tab.type.muiName === 'Tab',
@@ -323,7 +323,6 @@ class Tabs extends Component {
         key: index,
         index: index,
         selected: this.getSelected(tab, index),
-        height: tab.props.height || tabHeight,
         width: (tabType === 'fixed') ? `${fixedWidth}%` : 'auto',
         onTouchTap: this.handleTabTouchTap,
         isLargeView: (width === LARGE),
@@ -363,7 +362,6 @@ class Tabs extends Component {
       (tabType === 'scrollable-buttons') ? (
         <ScrollButton
           direction={'left'}
-          height={tabHeight}
           onTouchTap={this.handleLeftScrollTouchTap}
           visible={this.state.showLeftScroll}
           scrollIconColor={scrollIconColor}
@@ -375,7 +373,6 @@ class Tabs extends Component {
       (tabType === 'scrollable-buttons') ? (
         <ScrollButton
           direction={'right'}
-          height={tabHeight}
           onTouchTap={this.handleRightScrollTouchTap}
           visible={this.state.showRightScroll}
           scrollIconColor={scrollIconColor}
