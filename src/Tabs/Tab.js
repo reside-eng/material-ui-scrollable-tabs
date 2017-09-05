@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react';
+import {get} from 'lodash';
 import EnhancedButton from 'material-ui/internal/EnhancedButton';
 import SadFace from 'material-ui/svg-icons/social/sentiment-very-dissatisfied';
 
@@ -33,7 +34,7 @@ function getStyles(props, context) {
     WebkitBoxOrient: 'vertical',
   };
 
-  const label = Object.assign({}, themeLabelStyle, labelStyle)
+  const label = Object.assign({}, themeLabelStyle, labelStyle);
 
   return {
     root: {
@@ -161,6 +162,7 @@ class Tab extends Component {
     const {
       icon,
       iconPlaceholder,
+      iconStyle,
       index, // eslint-disable-line no-unused-vars
       onActive, // eslint-disable-line no-unused-vars
       onTouchTap, // eslint-disable-line no-unused-vars
@@ -170,8 +172,6 @@ class Tab extends Component {
       isLargeView, // eslint-disable-line no-unused-vars
       isMultiLine, // eslint-disable-line no-unused-vars
       style,
-      height, // eslint-disable-line no-unused-vars
-      width, // eslint-disable-line no-unused-vars
       ...other
     } = this.props;
 
@@ -184,16 +184,20 @@ class Tab extends Component {
         visibility: iconPlaceholder ? 'hidden' : null,
         paddingBottom: label ? '4px' : '0px',
         flexShrink: 0,
+        ...iconStyle,
       },
     };
+
+    // this is a terrible hack but i couldn't get destructuring to work properly
+    iconProps.height = iconProps.height || '16px';
+    iconProps.width = iconProps.width || '16px';
+
     let iconElement;
 
     if (icon && React.isValidElement(icon)) {
       // If it's svg icon set color via props
       if (icon.type.muiName !== 'FontIcon') {
         iconProps.color = styles.root.color;
-        iconProps.height = '16px';
-        iconProps.width = '16px';
       }
       iconElement = React.cloneElement(icon, iconProps);
     } else if (iconPlaceholder) {
