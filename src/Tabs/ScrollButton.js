@@ -4,7 +4,7 @@ import KeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-lef
 import KeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
 
 const getStyles = (props, context) => {
-  const {height} = props;
+  const {height, iconColor, iconSize} = props;
   const {tabs} = context.muiTheme;
 
   return {
@@ -22,8 +22,8 @@ const getStyles = (props, context) => {
       height,
     },
     icon: {
-      color: tabs.selectedTextColor,
-      fontSize: 24,
+      color: iconColor || tabs.selectedTextColor,
+      fontSize: iconSize || 24,
     },
   };
 };
@@ -38,6 +38,14 @@ class ScrollButton extends Component {
      * Sets the height of the scroll button; calculated by the Tabs component as the largest of all tab items
      */
     height: PropTypes.string,
+    /**
+     * Color for button
+     */
+    iconColor: PropTypes.string,
+    /**
+     * size of icon
+     */
+    iconSize: PropTypes.number,
     /**
      * Callback to execute for button press
      */
@@ -64,6 +72,8 @@ class ScrollButton extends Component {
       height, // eslint-disable-line no-unused-vars
       onTouchTap,
       visible,
+      iconColor, // eslint-disable-line no-unused-vars
+      iconSize, // eslint-disable-line no-unused-vars
       ...other
     } = this.props;
 

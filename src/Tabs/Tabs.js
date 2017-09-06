@@ -15,14 +15,14 @@ import InkBar from './InkBar';
 import ScrollButton from './ScrollButton';
 
 const getStyles = (props, context, state) => {
-  const {tabType} = props;
+  const {tabType, backgroundColor} = props;
   const {tabs} = context.muiTheme;
   const {offsetY} = state;
 
   return {
     root: {
       overflow: 'hidden',
-      backgroundColor: tabs.backgroundColor,
+      backgroundColor: backgroundColor || tabs.backgroundColor,
     },
     tabItemContainer: {
       flex: '1 1 auto',
@@ -37,6 +37,10 @@ const getStyles = (props, context, state) => {
 
 class Tabs extends Component {
   static propTypes = {
+    /**
+     * Background color for the entire container
+     */
+    backgroundColor: PropTypes.string,
     /**
      * Should be used to pass `Tab` components.
      */
@@ -64,6 +68,10 @@ class Tabs extends Component {
      * Override the inline-styles of the InkBar.
      */
     inkBarStyle: PropTypes.object,
+    /**
+     * Color to apply to the scroll icon
+     */
+    scrollIconColor: PropTypes.string,
     /**
      * Override the inline-styles of the root element.
      */
@@ -296,6 +304,8 @@ class Tabs extends Component {
       tabTemplateStyle,
       tabType,
       width,
+      scrollIconColor,
+      backgroundColor, // eslint-disable-line no-unused-vars
       ...other
     } = this.props;
 
@@ -303,8 +313,6 @@ class Tabs extends Component {
     const styles = getStyles(this.props, this.context, this.state);
     const tabContent = [];
     const fixedWidth = 100 / this.getTabCount();
-
-    const tabHeight = this.getTabs().some((tab) => (tab.props.label && tab.props.icon)) ? '72px' : '48px';
 
     const tabs = this.getTabs().map((tab, index) => {
       warning(tab.type && tab.type.muiName === 'Tab',
@@ -322,7 +330,6 @@ class Tabs extends Component {
         key: index,
         index: index,
         selected: this.getSelected(tab, index),
-        height: tab.props.height || tabHeight,
         width: (tabType === 'fixed') ? `${fixedWidth}%` : 'auto',
         onTouchTap: this.handleTabTouchTap,
         isLargeView: (width === LARGE),
@@ -362,9 +369,9 @@ class Tabs extends Component {
       (tabType === 'scrollable-buttons') ? (
         <ScrollButton
           direction={'left'}
-          height={tabHeight}
           onTouchTap={this.handleLeftScrollTouchTap}
           visible={this.state.showLeftScroll}
+          iconColor={scrollIconColor}
         />
       ) : null
     );
@@ -373,9 +380,9 @@ class Tabs extends Component {
       (tabType === 'scrollable-buttons') ? (
         <ScrollButton
           direction={'right'}
-          height={tabHeight}
           onTouchTap={this.handleRightScrollTouchTap}
           visible={this.state.showRightScroll}
+          iconColor={scrollIconColor}
         />
       ) : null
     );
