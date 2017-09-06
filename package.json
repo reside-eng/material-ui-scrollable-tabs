@@ -1,7 +1,6 @@
 {
   "name": "@reside-eng/material-ui-scrollable-tabs-build",
-  "private": true,
-  "author": "STORIS",
+  "author": "reside-eng",
   "version": "1.0.0",
   "description": "A Scrollable Tabs extension for material-ui.",
   "main": "./src/index.js",
@@ -15,11 +14,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/STORIS/material-ui-scrollable-tabs.git"
+    "url": "https://github.com/reside-eng/material-ui-scrollable-tabs.git"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/STORIS/material-ui-scrollable-tabs/issues"
+    "url": "https://github.com/reside-eng/material-ui-scrollable-tabs/issues"
   },
   "homepage": "http://material-ui.com/",
   "scripts": {
