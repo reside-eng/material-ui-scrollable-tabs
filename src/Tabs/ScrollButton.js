@@ -4,32 +4,43 @@ import KeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-lef
 import KeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
 
 const getStyles = (props, context) => {
-  const {height, iconColor, iconSize} = props;
+  const {height, style, buttonStyle, iconStyle} = props;
   const {tabs} = context.muiTheme;
+
+  const styleProps = style || {};
+  const iconStyleProps = iconStyle || {};
+  const buttonStyleProps = buttonStyle || {};
 
   return {
     root: {
-      padding: 0,
-      border: 0,
-      verticalAlign: 'top',
-      flex: '0 0 56px',
+      ...styleProps,
+      padding: styleProps.padding || 0,
+      border: styleProps.border || 0,
+      verticalAlign: styleProps.verticalAlign || 'top',
+      flex: styleProps.flex || '0 0 56px',
     },
     button: {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      height,
+      ...buttonStyleProps,
+      display: buttonStyleProps.display || 'flex',
+      flexDirection: buttonStyleProps.flexDirection || 'column',
+      alignItems: buttonStyleProps.alignItems || 'center',
+      justifyContent: buttonStyleProps.justifyContent || 'center',
+      height: buttonStyleProps.height || height,
     },
     icon: {
-      color: iconColor || tabs.selectedTextColor,
-      fontSize: iconSize || 24,
+      ...iconStyleProps,
+      color: iconStyleProps.color || tabs.selectedTextColor,
+      fontSize: iconStyleProps.fontSize || 24,
     },
   };
 };
 
 class ScrollButton extends Component {
   static propTypes = {
+    /**
+     * Style override object for button child
+     */
+    buttonStyle: PropTypes.object,
     /**
      * Which direction should the button indicate?
      */
@@ -39,17 +50,21 @@ class ScrollButton extends Component {
      */
     height: PropTypes.string,
     /**
-     * Color for button
+     * Style override object for icon child
      */
-    iconColor: PropTypes.string,
-    /**
-     * size of icon
-     */
-    iconSize: PropTypes.number,
+    iconStyle: PropTypes.object,
     /**
      * Callback to execute for button press
      */
     onTouchTap: PropTypes.func,
+    /**
+     * Whether or not to add placeholder when invisible
+     */
+    placeholder: PropTypes.bool,
+    /**
+     * Style override object for root
+     */
+    style: PropTypes.object,
     /**
      * Should the button be present or just consume space
      */
@@ -72,8 +87,10 @@ class ScrollButton extends Component {
       height, // eslint-disable-line no-unused-vars
       onTouchTap,
       visible,
-      iconColor, // eslint-disable-line no-unused-vars
-      iconSize, // eslint-disable-line no-unused-vars
+      placeholder, // eslint-disable-line no-unused-vars
+      style, // eslint-disable-line no-unused-vars
+      iconStyle, // eslint-disable-line no-unused-vars
+      buttonStyle, // eslint-disable-line no-unused-vars
       ...other
     } = this.props;
 
@@ -107,9 +124,11 @@ class ScrollButton extends Component {
         </EnhancedButton>
       );
     } else {
-      return (
+      return placeholder ?
+      (
         <div style={styles.root} />
-      );
+      ) :
+      null;
     }
   }
 }
