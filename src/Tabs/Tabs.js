@@ -30,6 +30,7 @@ const getStyles = (props, context, state) => {
       whiteSpace: 'nowrap',
       display: 'inline-block',
       overflowX: (tabType === 'fixed') ? 'hidden' : 'scroll',
+      overflowY: 'hidden',
       marginBottom: offsetY,
     },
   };
@@ -69,9 +70,21 @@ class Tabs extends Component {
      */
     inkBarStyle: PropTypes.object,
     /**
-     * Color to apply to the scroll icon
+     * Style override object for ScrollButton button child
      */
-    scrollIconColor: PropTypes.string,
+    scrollButtonStyle: PropTypes.object,
+    /**
+     * Style override object for ScrollButton icon child
+     */
+    scrollIconStyle: PropTypes.object,
+    /**
+     * Whether or not to add scroll placeholder when invisible
+     */
+    scrollPlaceholder: PropTypes.bool,
+    /**
+     * Style override object for ScrollButton root
+     */
+    scrollStyle: PropTypes.object,
     /**
      * Override the inline-styles of the root element.
      */
@@ -304,8 +317,11 @@ class Tabs extends Component {
       tabTemplateStyle,
       tabType,
       width,
-      scrollIconColor,
       backgroundColor, // eslint-disable-line no-unused-vars
+      scrollStyle,
+      scrollIconStyle,
+      scrollButtonStyle,
+      scrollPlaceholder,
       ...other
     } = this.props;
 
@@ -371,7 +387,10 @@ class Tabs extends Component {
           direction={'left'}
           onTouchTap={this.handleLeftScrollTouchTap}
           visible={this.state.showLeftScroll}
-          iconColor={scrollIconColor}
+          style={scrollStyle}
+          iconStyle={scrollIconStyle}
+          buttonStyle={scrollButtonStyle}
+          placeholder={scrollPlaceholder}
         />
       ) : null
     );
@@ -382,7 +401,10 @@ class Tabs extends Component {
           direction={'right'}
           onTouchTap={this.handleRightScrollTouchTap}
           visible={this.state.showRightScroll}
-          iconColor={scrollIconColor}
+          style={scrollStyle}
+          iconStyle={scrollIconStyle}
+          buttonStyle={scrollButtonStyle}
+          placeholder={scrollPlaceholder}
         />
       ) : null
     );
