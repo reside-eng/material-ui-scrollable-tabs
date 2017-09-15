@@ -1,7 +1,7 @@
 {
   "name": "@reside-eng/material-ui-scrollable-tabs-build",
   "author": "reside-eng",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "A Scrollable Tabs extension for material-ui.",
   "main": "./src/index.js",
   "keywords": [
