@@ -30,6 +30,7 @@ const getStyles = (props, context, state) => {
       whiteSpace: 'nowrap',
       display: 'inline-block',
       overflowX: (tabType === 'fixed') ? 'hidden' : 'scroll',
+      overflowY: 'hidden',
       marginBottom: offsetY,
     },
   };
